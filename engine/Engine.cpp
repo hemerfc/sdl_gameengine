@@ -32,8 +32,8 @@ void Engine::CreateSystems()
 	this->pRenderSystem = new RenderSystem(*this->mGameTitle, 0, 0, 640, 480, 320, 240);
 	this->Systems.push_back(this->pRenderSystem);
 
-	this->pEventSystem = new EventSystem();
-	this->Systems.push_back(this->pEventSystem);
+	this->pInputSystem = new InputSystem();
+	this->Systems.push_back(this->pInputSystem);
 }
 
 void Engine::GameLoop()
@@ -42,7 +42,7 @@ void Engine::GameLoop()
 	Uint32 oldTime = newTime;
 	Uint32 deltaTime = 0;
 
-	while (!this->pEventSystem->HasQuitEvent())
+	while (!this->pInputSystem->HasQuitEvent())
 	{
 		for(auto&& system : this->Systems)
 		{

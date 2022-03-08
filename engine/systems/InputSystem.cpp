@@ -1,16 +1,30 @@
-#include "systems/EventSystem.h"
+#include "systems/InputSystem.h"
 
-EventSystem::EventSystem()
+InputSystem::InputSystem()
 {
 	this->mQuit = false;
 }
 
-void EventSystem::Update(Scene* scene, float dt)
+void InputSystem::Update(Scene* scene, float dt)
 {
     this->ProcessEvents();
+
+	// for each entity	
+    auto entities = scene->GetEntities();
+    for (auto ent : entities)
+    {
+        auto comp = ent.second->GetComponent(InputComponent::TYPE);
+
+        if(comp != nullptr)
+        {
+            auto inputComp = (InputComponent*)comp;
+
+            inputComp->SetButtons(this->mButtons);
+        }
+    }
 }
 
-void EventSystem::ProcessEvents()
+void InputSystem::ProcessEvents()
 {    
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) 
@@ -62,7 +76,7 @@ void EventSystem::ProcessEvents()
 	}
 }
 
-bool EventSystem::HasQuitEvent()
+bool InputSystem::HasQuitEvent()
 {    
 	return this->mQuit;
 }

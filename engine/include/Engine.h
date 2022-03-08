@@ -11,7 +11,7 @@
 #include "Entity.h"
 #include "systems/BaseSystem.h"
 #include "systems/RenderSystem.h"
-#include "systems/EventSystem.h"
+#include "systems/InputSystem.h"
 
 using namespace std;
 
@@ -28,6 +28,6 @@ private:
     Scene* pCurrentScene;
     vector<BaseSystem*> Systems;
     RenderSystem* pRenderSystem;
-    EventSystem* pEventSystem;
+    InputSystem* pInputSystem;
     string* mGameTitle;
 };

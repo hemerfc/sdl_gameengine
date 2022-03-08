@@ -19,47 +19,15 @@ Scene* CreateScene01()
 
 	auto ent1 = sc->CreateEntity();
 	new RectComponent(ent1, {20.0f, 105.0f}, {10.0f, 30.0f});
+	new InputComponent(ent1);
 	
 	auto ent2 = sc->CreateEntity();
 	new RectComponent(ent2, {280.0f, 105.0f}, {10.0f, 30.0f});
+	new InputComponent(ent2);
 	
 	auto ent3 = sc->CreateEntity();
 	new RectComponent(ent3, {110.0f, 150.0f}, {20.0f, 20.0f});
+	new InputComponent(ent3);
 
 	return sc;
 }
-
-
-/*
-
-int main(int argc, char* argv[])
-{
-	SDLManager sdlManager;
-	sdlManager.init("Pong", 100, 0, 640, 480);
-
-	auto currentScene = new Scene01(&sdlManager);
-	Uint16 frameCounter = 0;
-	Sint32 frameTimer = 1000;
-
-	Uint32 newTime = SDL_GetTicks();
-	Uint32 oldTime = newTime;
-	Uint32 deltaTime = 0;
-
-	while (!sdlManager.Quit)
-	{
-		sdlManager.FrameControl();
-
-		sdlManager.ProcessEvents();
-		currentScene->Update(0.016f);
-		
-		sdlManager.RenderBegin();
-		currentScene->Render();
-		sdlManager.RenderEnd();
-	}
-
-	sdlManager.Shutdown();
-	
-	return 0;
-}
-
-*/

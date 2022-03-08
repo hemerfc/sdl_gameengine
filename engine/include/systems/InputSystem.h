@@ -5,15 +5,16 @@
 #include <iostream>
 #include <stdexcept>
 #include <SDL2/SDL.h>
+#include "components/InputComponent.h"
 #include "systems/BaseSystem.h"
 #include "systems/Types.h"
 #include "Scene.h"
 
 // Input
-class EventSystem : public BaseSystem
+class InputSystem : public BaseSystem
 {
 public: 
-	EventSystem();
+	InputSystem();
 	void Update(Scene* scene, float dt);
 	bool HasQuitEvent();
 private:
