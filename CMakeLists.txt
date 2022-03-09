@@ -1,49 +1,29 @@
-# Works with 3.11 and tested through 3.22
-cmake_minimum_required(VERSION 3.11...3.22)
+cmake_minimum_required(VERSION 3.7)
 
-PROJECT(
-  sdl_games
-  VERSION 0.1
-  DESCRIPTION "An example project with CMake"
-  LANGUAGES CXX) 
+set(PROJECT_NAME GameEngine)
+project(${PROJECT_NAME} LANGUAGES CXX)
 
-# Only do these if this is the main project, and not if it is included through add_subdirectory
-if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
-
-  # Let's ensure -std=c++xx instead of -std=g++xx
-  set(CMAKE_CXX_EXTENSIONS OFF)
-  
-  # Let's nicely support folders in IDEs
-  set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-
-  # Testing only available if this is the main app
-  # Note this needs to be done in the main CMakeLists
-  # since it calls enable_testing, which must be in the
-  # main CMakeLists.
-  include(CTest) 
-  
+# Set build type to debug by default.
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Debug)
 endif()
 
+# Let's nicely support folders in IDEs
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-# FetchContent added in CMake 3.11, downloads during the configure step
-include(FetchContent)
-# FetchContent_MakeAvailable was not added until CMake 3.14; use our shim
-if(${CMAKE_VERSION} VERSION_LESS 3.14)
-  include(cmake/add_FetchContent_MakeAvailable.cmake)
-endif() 
+# find_package(SDL2 REQUIRED)
+# include_directories(${SDL2_INCLUDE_DIRS})
+#FILE(
+#    GLOB src "src/*.h" "src/*.hpp" "src/*.c" "src/*.cpp"
+#)
+# Copy resource files
+#FILE(COPY "${CMAKE_CURRENT_SOURCE_DIR}/res/" DESTINATION "${CMAKE_BINARY_DIR}/res/")
 
-# Needed so that cmake uses our find modules.
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+# Add third party libraries.
+add_subdirectory(vendor)
 
-# The compiled library code is here
+# Add engine
 add_subdirectory(engine)
 
-# The executable code is here
-add_subdirectory(pong)
-
-# Testing only available if this is the main app
-# Emergency override MODERN_CMAKE_BUILD_TESTING provided as well
-if((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME OR MODERN_CMAKE_BUILD_TESTING)
-   AND BUILD_TESTING)
-  add_subdirectory(tests)
-endif()
+# Add games folder
+add_subdirectory(games)

@@ -30,24 +30,35 @@ Engine::Engine(const char* gameTitle)
 void Engine::CreateSystems()
 {
 	this->pRenderSystem = new RenderSystem(*this->mGameTitle, 0, 0, 640, 480, 320, 240);
-	this->Systems.push_back(this->pRenderSystem);
+	this->AddSystem(this->pRenderSystem);
 
 	this->pInputSystem = new InputSystem();
-	this->Systems.push_back(this->pInputSystem);
+	this->AddSystem(this->pInputSystem);
+}
+
+void Engine::AddSystem(BaseSystem* system)
+{
+	this->Systems.push_back(system);
 }
 
 void Engine::GameLoop()
 {
-	Uint32 newTime = SDL_GetTicks();
-	Uint32 oldTime = newTime;
-	Uint32 deltaTime = 0;
+	Uint32 lastTime = SDL_GetTicks();
+	Uint32 currentTime = SDL_GetTicks();
+	float deltaTime = 0;
+	float miliseconds = 1000.0;
 
 	while (!this->pInputSystem->HasQuitEvent())
-	{
+	{	
+		currentTime = SDL_GetTicks();
+		deltaTime = (currentTime-lastTime)/miliseconds;
+
 		for(auto&& system : this->Systems)
 		{
-			system->Update(this->pCurrentScene, 0.016f); // this->mSdlManager.GetRenderer());
+			system->Update(this->pCurrentScene, deltaTime);// 0.016f); // this->mSdlManager.GetRenderer());
 		}
+		
+		lastTime = currentTime;
     }
 }
 

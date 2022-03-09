@@ -4,10 +4,10 @@
 #include <cstdint>
 #include <iostream>
 #include <stdexcept>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include "components/InputComponent.h"
 #include "systems/BaseSystem.h"
-#include "systems/Types.h"
+#include "systems/InputButons.h"
 #include "Scene.h"
 
 // Input

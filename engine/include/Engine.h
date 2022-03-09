@@ -4,13 +4,14 @@
 #include <vector>
 #include <iostream>
 #include <stdexcept>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include <SDL.h>
+#include <SDL_image.h>
 #include "Entity.h"
 #include "Scene.h"
 #include "Entity.h"
 #include "systems/BaseSystem.h"
 #include "systems/RenderSystem.h"
+#include "systems/InputSystem.h"
 #include "systems/InputSystem.h"
 
 using namespace std;
@@ -23,6 +24,7 @@ public:
     void GameLoop();
     void CreateSystems();
     void SetCurrentScene(Scene* scene);
+    void AddSystem(BaseSystem* system);
 
 private: 
     Scene* pCurrentScene;

@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <stdexcept>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include "systems/BaseSystem.h"
 #include "components/RectComponent.h"
 #include "Scene.h"

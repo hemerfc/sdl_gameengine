@@ -1,15 +1,29 @@
-file(GLOB_RECURSE sources "${sdl_games_SOURCE_DIR}/engine/*.cpp")
+file(GLOB_RECURSE sources "${CMAKE_SOURCE_DIR}/engine/*.cpp")
 
 # create a dinamic lib
-add_library(engine_lib ${sources} ${includes})
+add_library(engine STATIC ${sources})
  
-set(SDL2_INCLUDE_DIR "C:/hemerson/Projetos/games/SDL2/include")
-set(SDL2_LIBRARY "C:/hemerson/Projetos/games/SDL2/lib/x64")
+# Set C++ standard.
+set_target_properties(engine PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
+    CXX_EXTENSIONS OFF
+) 
 
-target_link_directories(engine_lib PUBLIC ${SDL2_LIBRARY})
-target_include_directories(engine_lib PRIVATE ${SDL2_INCLUDE_DIR})
+# Set compile flags.
+target_compile_options(engine PRIVATE
+    # Clang
+    $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:-Weverything>
+    # GCC
+    $<$<CXX_COMPILER_ID:GNU>:-Wall -Wextra -Wpedantic -fdiagnostics-color=always>
+    # Visual Studio
+    $<$<CXX_COMPILER_ID:MSVC>:/W4>
+)
 
 # engine include folder
-target_include_directories(engine_lib PUBLIC "${sdl_games_SOURCE_DIR}/engine/include")
+target_include_directories(engine PUBLIC "${CMAKE_SOURCE_DIR}/engine/include")
+target_include_directories(engine PUBLIC "${CMAKE_SOURCE_DIR}/vendor/SDL/include")
+target_include_directories(engine PUBLIC "${CMAKE_SOURCE_DIR}/vendor/SDL_image/include")
+target_include_directories(engine PUBLIC "${CMAKE_SOURCE_DIR}/vendor/box2d/include")
 
-target_link_libraries(engine_lib SDL2main SDL2 SDL2_image)
+target_link_libraries(engine SDL2-static SDL2_image box2d) 
